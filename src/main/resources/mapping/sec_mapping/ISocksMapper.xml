@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mybatis.mapper.mapper1.ISocksMapper">
+    <resultMap id="baseResult" type="com.mybatis.mybatis.entity.Socks">
+        <id property="cron_id" column="cronId"/>
+        <result property = "cron" column="cron"/>
+    </resultMap>
+
+    <resultMap id="baseResult2" type="java.lang.String">
+        <result property = "cron" column="cron"/>
+    </resultMap>
+
+    <sql id="insert">
+        cronId, cron
+    </sql>
+
+    <insert id="insert"  parameterType="com.mybatis.mybatis.entity.Socks">
+        insert into socks(<include refid="insert"/>)  values (#{cron_id},#{cron})
+    </insert>
+
+    <select id="select" parameterType="com.mybatis.mybatis.entity.Socks" resultMap="baseResult">
+        select * from socks  WHERE cronId = #{cron_id}; <!--这里要注意了，这里#{cron_id}是实体类的属性，而不是随便输值，因为你要输入值-->
+    </select>
+
+    <select id="MapSelect" parameterType="java.util.Map" resultMap="baseResult">
+        select * from socks  WHERE cronId = #{id};
+    </select>
+
+    <select id="selectCron"  resultMap="baseResult2">   <!-- 多个resultMap也可以，返回类型也可以是实体类，基本数据类型，集合类-->
+        select cron from socks where cronId = #{id}
+    </select>
+
+
+</mapper>

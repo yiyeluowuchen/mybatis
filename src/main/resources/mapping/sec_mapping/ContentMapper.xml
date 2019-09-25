@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.mybatis.mybatis.mapper.mapper1.ContentMapper">
+    <resultMap id="baseResult" type="com.mybatis.mybatis.entity.Content">
+        <result property="contentId" column="contentId"/>
+        <result column="nice" property="nice"/>
+    </resultMap>
+
+
+    <select id="findContent" parameterType = "java.lang.Long" resultMap="baseResult">
+
+        select * from content where contentId = #{id}
+    </select>
+
+    <update id = "save" parameterType="com.mybatis.mybatis.entity.Content">
+
+        update content set contentId = #{contentId},nice = #{nice}
+
+    </update>
+
+</mapper>

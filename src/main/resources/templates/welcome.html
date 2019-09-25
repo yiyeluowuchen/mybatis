@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec = "http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    <h开头这几个，会使得在页面的中心>-->
+    <h1 align ="center">欢迎光临学生课程管理系统</h1>
+    <div sec:authorize = "!isAuthenticated()">
+        <h2 align="center">游客你好，如果想查看学生课程信息，请<a th:href="@{/userlogin}">登陆</a></h2>
+    </div>
+    <div sec:authorize = "isAuthenticated()">
+        <h2>
+            <span sec:authentication = "name"></span>,
+            您好，你的角色有：
+            <span sec:authentication = "principal.authorities"></span>
+        </h2>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="注销"/>
+        </form>
+    </div>
+    <div sec:authorize ="hasRole('g1')">
+        <h3 >一年级</h3>
+        <!--  无序列表ul，有序列表ol，dl  -->
+        <ul>
+            <li><a th:href="@{/grade1/1}"> 语文</a></li>
+            <li><a th:href="@{/grade1/2}">数学</a></li>
+        </ul>
+    </div>
+    <div sec:authorize = "hasRole('g2')">
+        <h3>二年级</h3>
+        <ul>
+            <li><a th:href = "@{/grade2/1}">语文</a></li>
+            <li><a th:href = "@{/grade2/2}">数学</a></li>
+            <li><a th:href = "@{/grade2/3}">英语</a></li>
+        </ul>
+    </div>
+    <div sec:authorize  ="hasRole('g3')">
+        <h3>三年级</h3>
+        <ul>
+            <li><a th:href = "@{/grade3/1}">语文</a></li>
+            <li><a th:href = "@{/grade3/2}">数学</a></li>
+            <li><a th:href = "@{/grade3/3}">英语</a></li>
+        </ul>
+    </div>
+
+</body>
+</html>

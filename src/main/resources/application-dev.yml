@@ -1,0 +1,95 @@
+server:
+  port: 8888
+
+
+spring:
+  datasource:
+    db2:
+      url: jdbc:mysql://localhost:3306/db1?serverTimezone=UTC
+      username: root
+      password: zhang
+      driverClassName: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      #初始化连接大小
+      initialSize: 5
+      #最小空闲连接数
+      minIdle: 5
+      #最大连接数
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+
+    mapper1:
+      url: jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC
+      username: root
+      password: zhang
+      driverClassName: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      #初始化连接大小
+      initialSize: 5
+      #最小空闲连接数
+      minIdle: 5
+      #最大连接数
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+
+  redis:
+    #Redis服务器地址
+    host: localhost
+    #Redis服务器连接口
+    port: 6379
+    #Redis服务器连接密码（默认为空）
+    password:
+    jedis:
+      pool:
+        ##连接池最大连接数，负值表示没有限制
+        max-active: 8
+        ##连接池中的最大空闲连接，负值表示没有限制
+        max-idle: 8
+        ##连接池最大阻塞等待时间
+        max-wait: -1
+        ##连接池中的最小空闲连接，负值表示没有限制
+        min-idle: 0
+  thymeleaf:
+    cache: false
+
+mybatis:
+  type-aliases-package: com.mybatis.mybatis.entity
+  #指定sql语句映射文件位置
+  mapper-locations: classpath:mapping/*/*.xml   # *号还是很好用的，匹配包下的所有
+
+#  mybatis:
+#    type-aliases-package: com.mybatis.mybatis.entity
+#    mapper-locations: classpath:mapping/*.xml
+
+logging:
+  level:
+    com:
+      mybatis:
+        mybatis:
+          mapper: debug
+
+
+
+

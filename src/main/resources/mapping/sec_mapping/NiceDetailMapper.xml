@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis.mybatis.mapper.mapper1.NiceDetailMapper">
+    <resultMap id="baseResult" type="com.mybatis.mybatis.entity.NiceDetail">
+        <result column="id" property = "id" />
+        <result column ="userId" property = "userId" />
+        <result column="contentId" property="contentId" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+
+    <select id="find" parameterType="com.mybatis.mybatis.entity.NiceDetail" resultMap="baseResult">
+
+        select * from nice_detail where  userId = #{userId} and contentId = #{contentId}
+
+    </select>
+
+    <insert id ="insert" parameterType = "com.mybatis.mybatis.entity.NiceDetail" useGeneratedKeys ="true" keyProperty="id">
+        insert into nice_detail(userId,contentId,createTime)  values(#{userId},#{contentId},#{createTime})
+    </insert>
+
+    <delete id="delete" parameterType="com.mybatis.mybatis.entity.NiceDetail">
+        delete  from nice_detail where userId = #{userId} and contentId = #{contentId}
+    </delete>
+</mapper>
+
+

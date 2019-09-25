@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mybatis.mapper.mapper1.IUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.mybatis.mybatis.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="realName" jdbcType="VARCHAR" property="realName" />
+    </resultMap>
+    <sql id="baseResult">
+       id ,userName, password, realName  <!--用sql标签， 这里查询到的属性可以任意哪个或者几个，修改就块快，下面sql语句就不用改，也可以多个sql语句，  -->
+    </sql>
+    <sql id="baseInsert">
+     userName, password, realName
+    </sql>
+
+
+    <select id = "selectAll" resultMap="BaseResultMap">
+        select * from mybatis_table
+    </select>
+
+    <select id="sel"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from mybatis_table where id = #{id2}  <!-- 这是我思考是id="sel" 标识调用这个方法，paramterType指定是传入参数是啥类型，
+        resultMap返回的是什么类型，#{id2}表示传入的这个方法中的id2参数,这个传入不是实体的参数，就随便，实体的话则要实体类的属性 感觉#{id2}这是占位符的意思-->
+    </select>
+
+    <select id="selectByUser" parameterType="com.mybatis.mybatis.entity.User" resultMap="BaseResultMap">
+        SELECT <include refid="baseResult" />  FROM mybatis_table WHERE 1=1    <!-- 1=1是为了不会报错 -->
+<!--        <if test="id != null and id != ' ' "> &lt;!&ndash; 这里传入的类型是一个实体类，但传入其中的一些属性来查询&ndash;&gt;-->
+<!--            AND id = #{id}-->
+<!--        </if>-->
+        <if test="userName != null and userName != ''"><!--  用if来判断一下null啥的。-->
+            AND userName = #{userName}
+        </if>
+
+    </select>
+
+    <insert id="insertUser" parameterType="com.mybatis.mybatis.entity.User"  useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO mybatis_table(<include refid="baseInsert"/>) VALUES (#{userName},#{password},#{realName})
+
+    </insert>
+
+    <insert id="insertUserList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into mybatis_table(id,userName,password,realName)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id},#{item.userName} ,#{item.password} , #{item.realName})
+        </foreach>
+
+    </insert>
+
+    <delete id="deleteUser" parameterType="com.mybatis.mybatis.entity.User"  >
+        DELETE FROM mybatis_table  WHERE  userName = #{userName} and id = #{id}
+    </delete>
+    <update id="updateUser" parameterType="com.mybatis.mybatis.entity.User">
+
+      <!--update mybatis_table set <include refid="baseUpdate" /> where  realName = #{realName} 这样是不行的 -->
+        update mybatis_table set userName = #{userName}, password = #{password} where   realName = #{realName}
+    </update>
+
+    <sql id="up">
+            userName ,password
+    </sql>
+
+    <select id="select" parameterType ="com.mybatis.mybatis.entity.User" resultMap="BaseResultMap" >
+
+    select <include refid="up"/> from mybatis_table where userName = #{userName} and password = #{password}
+
+    </select>
+
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from mybatis_table where userName = #{userName}
+
+    </select>
+
+
+    <select id = "selectLogin" parameterType = "com.mybatis.mybatis.entity.User" resultMap="BaseResultMap">
+        select * from mybatis_table where userName = #{userName} and password = #{password}
+    </select>
+
+
+</mapper>

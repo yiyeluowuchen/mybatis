@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h3>result</h3>
+
+
+<div th:text="'username:'+${user.userName}"></div>
+<div th:text="'pwd:'+${user.password}"></div>
+<a href="/Login">其他消息</a>
+</body>
+</html>

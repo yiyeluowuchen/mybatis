@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mybatis.mapper.db1.ICopyTable">
+
+    <insert id="insertAll" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into copy_mybatis(id,user_name,password,real_name)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id},#{item.userName} ,#{item.password} , #{item.realName})
+        </foreach>
+
+    </insert>
+
+
+    <insert id = "insertUser2" parameterType="com.mybatis.mybatis.entity.User" useGeneratedKeys="true" keyProperty="id">
+
+            insert into copy_mybatis(id,user_name,password,real_name) values (#{id},#{userName},#{password},#{realName})
+    </insert>
+
+</mapper>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec= "http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 align = "center">欢迎登陆学生课程管理系统</h1>
+    <div align = "center">
+        <form th:action="@{/aaa}" method="post">
+            <table>
+                <tr><td>用户名：</td>
+                    <td><input type="text" name = "user"/></td>
+                </tr>
+                <tr><td>密码：</td>
+                    <td><input type = "password" name = "pwd"/></td>
+                </tr>
+                <br/>
+                <tr>
+                    <td align="center"><input type="checkbox" name="remember" />记住我</td>
+                </tr>
+                <tr>
+                    <td><input type = "submit" value="登陆"/></td>
+                    <td><input type = "reset" value="取消"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

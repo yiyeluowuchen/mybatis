@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace = "com.mybatis.mybatis.mapper.mapper1.INewsMapper">
+    <!-- 这种形式也可以，但在resultMap中是以id，然后result，association，collection顺序来放的。这种就不用考虑数据库表建造的字段一样-->
+<!--    <resultMap id="baseResultMap"  type="com.mybatis.mybatis.entity.News">-->
+<!--        <id property = "id" column="id"/>-->
+<!--        <result property = "title" column = "title"/>-->
+<!--        <result property = "content" column = "content"/>-->
+<!--        <result property = "user_id" column = "user_id"/>-->
+<!--        <association property="uUser"  javaType="com.mybatis.mybatis.entity.User">-->
+<!--            <id property = "id" column="id"/>-->
+<!--            <result property = "userName" column = "userName"/>-->
+<!--            <result property = "password" column = "password"/>-->
+<!--            <result property = "realName" column = "realName"/>-->
+<!--        </association>-->
+<!--    </resultMap>-->
+
+    <!-- 这样就是把所有实体类的属性放在一个实体类里。你可以继承那一个多的，然后把少的放进来。就相当于啊
+    数据库查到的字段的值，先放在了某个地方，然后再用这个匹配的property 返回那个值。这样的话，感觉column不能相同了
+    -->
+    <resultMap id="baseResultMap"  type="com.mybatis.mybatis.entity.Total">
+        <id property = "id" column="nid"/>
+        <id property = "id1" column ="id"/>
+        <id property = "mid" column ="mid"/>
+        <result property = "title" column = "title"/>
+        <result property = "content" column = "content"/>
+        <result property = "user_id" column = "user_id"/>
+        <result property = "userName" column = "userName"/>
+        <result property = "password" column = "password"/><!--这里property的命名是随意的，只要把表的返回值对应就好了-->
+        <result property = "realName" column = "realName"/>
+        <result property = "height" column = "height"/>
+        <result property="weight" column = "weight"/>
+    </resultMap>
+
+  <select id="select"  parameterType = "java.lang.Integer" resultMap = "baseResultMap">
+
+    select b.id,b.realName,b.userName,b.password,a.nid,a.nid,a.title,a.content,a.user_id,c.*
+    from (news a  left join mybatis_table b  on a.user_id = b.id) left join message c on b.id = c.mid where a.nid = #{id}
+
+    </select>
+
+    <!-- 这样嵌套也是可以查出某个表的字段的-->
+<!--    <select id="select" parameterType="java.lang.Integer" resultMap = "baseResultMap">-->
+<!--    select  * from mybatis_table where id in (select user_id from news where nid = #{id})-->
+<!--    </select>-->
+
+</mapper>
