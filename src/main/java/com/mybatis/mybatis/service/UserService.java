@@ -85,6 +85,7 @@ public class UserService {
     /**redis
      * 查询多个用户策略：先在缓存中查找来获取结果，没有的话从数据表中获取结果，再把结果存入缓存，
      * @param user
+     * 好的
      * @return
      */
      public List<User> selectByUser(User user){
